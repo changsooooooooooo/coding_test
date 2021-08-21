@@ -3,12 +3,16 @@ from collections import deque
 
 def solution(n, k, cmd):
     answer = ''
-    exist_list = [True for _ in range(n + 1)]
-    current_table = [i for i in range(n+1)]
+    exist_list = [True for _ in range(n)]
+    current_table = [i for i in range(n)]
     cache = deque()
-    r_cus = k+1
+    r_cus = k
 
     for c in cmd:
+        print("pos : ", r_cus)
+        print("cache : ", cache)
+        print("cmd : ", c)
+        print("current_table : ", current_table)
         if c[0] == "D":
             r_cus += int(c[2])
             continue
@@ -36,7 +40,7 @@ def solution(n, k, cmd):
             current_table = current_table[:idx]+[recent]+current_table[idx:]
             continue
         if recent < current_table[r_cus]:
-            idx = 0
+            idx = r_cus
             for i in range(r_cus, -1, -1):
                 if current_table[i] < recent:
                     idx = i
@@ -45,8 +49,8 @@ def solution(n, k, cmd):
             r_cus += 1
             continue
 
+
     # print(cache)
-    exist_list = exist_list[1:]
     for b in exist_list:
         if b:
             answer += "O"
