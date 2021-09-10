@@ -15,43 +15,34 @@ def solution(n, start, end, roads, traps):
         dictionary[from_][to] = cost
         dictionary[to+n][from_+n] = cost
 
-    present_cost_even = [math.inf for _ in range(n+1)]
-    present_cost_even[start] = 0
-    present_cost_odd = [math.inf for _ in range(n+1)]
-    present_cost_odd[start] = 0
+    present_cost = [math.inf for _ in range(n+1)]
+    present_cost[start] = 0
 
-    visited = [False for _ in range(2*n+1)]
     switch = 0
     queue = deque([start])
 
     while queue:
         node = queue.popleft()
+        print(node)
 
-        if visited[node]:
-            continue
         if trap_idx[node]:
             switch += 1
         if switch % 2 == 0:
+
+            if n < node:
+                node -= n
+
             for next_node in dictionary[node]:
-                if visited[next_node]:
-                    continue
                 cost = dictionary[node][next_node]
-                if present_cost_even[node]+cost < present_cost_even[next_node]:
-                    present_cost_even[next_node] = present_cost_even[node]+cost
-                queue.append(next_node)
-            visited[node] = True
+                if present_cost[node]+cost < present_cost[next_node]:
+                    present_cost[next_node] = present_cost[node]+cost
+                    queue.append(next_node)
             continue
-
+        node += n
         for next_node in dictionary[node]:
-            if visited[next_node]:
-                continue
             cost = dictionary[node][next_node]
-            if present_cost_odd[node-n]+cost < present_cost_odd[next_node-n]:
-                present_cost_odd[next_node-n] = present_cost_odd[node-n]+cost
-            queue.append(next_node)
-        visited[node] = True
+            if present_cost[node-n]+cost < present_cost[next_node-n]:
+                present_cost[next_node-n] = present_cost[node-n]+cost
+                queue.append(next_node)
 
-    if switch % 2 == 0:
-        return present_cost_even[end]
-
-    return present_cost_odd[end]
+    return present_cost[end]
