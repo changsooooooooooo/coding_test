@@ -29,13 +29,13 @@ def solution(scores):
         if 90 <= sum/count:
             answer += "A"
             continue
-        if 80 <= sum/count<90:
+        if 80 <= sum/count < 90:
             answer += "B"
             continue
-        if 70 <= sum/count<80:
+        if 70 <= sum/count < 80:
             answer += "C"
             continue
-        if 50 <= sum/count<70:
+        if 50 <= sum/count < 70:
             answer += "D"
             continue
         answer += "F"
