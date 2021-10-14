@@ -1,5 +1,6 @@
 from collections import defaultdict
 
+
 def solution(scores):
     answer = ''
 
