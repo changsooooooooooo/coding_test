@@ -1,5 +1,6 @@
 from collections import defaultdict, deque
 
+
 def search(start, money, graph, money_graph):
     queue = deque([(start, money)])
     money_graph[start] += money
@@ -10,10 +11,17 @@ def search(start, money, graph, money_graph):
         if node == "center":
             break
 
-        need_to_give = int(money*0.1)
+        need_to_give = int(money * 0.1)
+
+        if not need_to_give:
+            break
+
         next_node = graph[node]
         money_graph[next_node] += need_to_give
         money_graph[node] -= need_to_give
+
+        if next_node == "center":
+            break
         queue.append((next_node, need_to_give))
 
 
@@ -34,7 +42,7 @@ def solution(enroll, referral, seller, amount):
         graph[enroll[idx]] = r
 
     for idx, sell in enumerate(seller):
-        search(sell, amount[idx]*100, graph, money_graph)
+        search(sell, amount[idx] * 100, graph, money_graph)
 
     for e in enroll:
         answer.append(money_graph[e])
