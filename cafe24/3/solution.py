@@ -12,6 +12,6 @@ def solution(size):
         end = int(size/2)+1
 
     for i in range(start, end):
-        answer += int(3*i/2 - size/2 +1)
+        answer += int(3*i/2 - size/2 + 1)
 
     return answer
